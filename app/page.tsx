@@ -2,7 +2,7 @@
 export default function Home() {
   return (
     <div className="flex flex-col items-center justify-center h-screen">
-      <h1 className="text-2xl font-bold">Fagprøve Bekkelaget IL</h1>
+      <h1 className="text-2xl font-bold">Bekkelaget IL</h1>
     </div>
   );
 }
