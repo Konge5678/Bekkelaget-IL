@@ -7,6 +7,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { formatOsloDateTime } from "@/lib/date";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 import Link from "next/link";
 import { redirect } from "next/navigation";
@@ -83,7 +84,7 @@ export default async function AdminArticlesPage({ searchParams }: Props) {
             <TableRow key={a.id}>
               <TableCell className="max-w-[520px] truncate">{a.title}</TableCell>
               <TableCell>
-                {a.updated_at ? new Date(a.updated_at).toLocaleString("no-NO") : "-"}
+                {formatOsloDateTime(a.updated_at)}
               </TableCell>
               <TableCell className="text-right">
                 <div className="flex justify-end gap-2">
