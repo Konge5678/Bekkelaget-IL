@@ -1,9 +1,18 @@
-import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { createSupabaseServerClient } from "@/lib/supabase/server";
 import Link from "next/link";
 import { ArrowRight } from 'lucide-react';
+import { Button } from "@/components/ui/button";
 
-export default function AdminPage() {
+export default async function AdminPage() {
+  const supabase = await createSupabaseServerClient();
+  const { data: latestNews } = await supabase
+    .from("news")
+    .select("title")
+    .order("created_at", { ascending: false })
+    .limit(1)
+    .maybeSingle();
+
   return (
     <div className="flex flex-col gap-6">
       <div className="text-center">
@@ -17,7 +26,9 @@ export default function AdminPage() {
         <Card>
           <CardHeader>
             <CardTitle>Nyheter</CardTitle>
-            <CardDescription>Siste:</CardDescription>
+            <CardDescription>
+              Siste: {latestNews?.title ? latestNews.title : "(ingen nyheter enda)"}
+            </CardDescription>
           </CardHeader>
           <CardContent>
             <Button asChild className="w-full">
