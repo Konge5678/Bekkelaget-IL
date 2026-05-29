@@ -1,3 +1,4 @@
+import { FormField } from "@/components/admin/form-field";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -7,6 +8,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 import Link from "next/link";
 import { redirect } from "next/navigation";
@@ -58,46 +60,42 @@ export default async function AdminNewsEditPage({ params }: Props) {
           <form action={updateNews} className="flex flex-col gap-4">
             <input type="hidden" name="id" value={data.id} />
 
-            <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
-              <div className="flex flex-col gap-1">
-                <span className="text-sm text-muted-foreground">Tittel</span>
+            <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+              <FormField label="Tittel">
                 <Input
                   name="title"
                   placeholder="Tittel"
                   defaultValue={data.title ?? ""}
                   required
                 />
-              </div>
-              <div className="flex flex-col gap-1">
-                <span className="text-sm text-muted-foreground">Kategori</span>
+              </FormField>
+              <FormField label="Kategori">
                 <Input
                   name="category"
                   placeholder="F.eks. Fotball, Dugnad"
                   defaultValue={data.category ?? ""}
                 />
-              </div>
+              </FormField>
             </div>
 
-            <div className="flex flex-col gap-1">
-              <span className="text-sm text-muted-foreground">Ingress</span>
-              <textarea
+            <FormField label="Ingress">
+              <Textarea
                 name="excerpt"
-                className="min-h-[90px] w-full rounded-md border-2 border-input bg-background px-3 py-2 text-sm"
+                className="min-h-[90px]"
                 placeholder="Kort ingress (valgfritt)"
                 defaultValue={data.excerpt ?? ""}
               />
-            </div>
+            </FormField>
 
-            <div className="flex flex-col gap-1">
-              <span className="text-sm text-muted-foreground">Innhold</span>
-              <textarea
+            <FormField label="Innhold">
+              <Textarea
                 name="content"
                 required
-                className="min-h-[220px] w-full rounded-md border-2 border-input bg-background px-3 py-2 text-sm"
+                className="min-h-[220px]"
                 placeholder="Skriv nyheten her..."
                 defaultValue={data.content ?? ""}
               />
-            </div>
+            </FormField>
 
             <div className="flex gap-2">
               <Button type="submit">Lagre</Button>
@@ -111,4 +109,3 @@ export default async function AdminNewsEditPage({ params }: Props) {
     </div>
   );
 }
-

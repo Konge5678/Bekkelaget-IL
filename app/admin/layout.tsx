@@ -29,7 +29,7 @@ export default async function AdminLayout({
 
   return (
     <div className="min-h-screen">
-      <header className="border-b bg-muted/30">
+      <header className="border-b border-primary/20 bg-primary text-primary-foreground">
         <div className="mx-auto flex w-full max-w-6xl items-center justify-between gap-4 px-6 py-4">
           <Link href="/admin" className="font-semibold">
             Redaktørpanel
@@ -37,17 +37,29 @@ export default async function AdminLayout({
 
           <nav className="flex items-center gap-2">
             {isAdmin ? (
-              <Button asChild variant="ghost">
+              <Button
+                asChild
+                variant="ghost"
+                className="text-primary-foreground hover:bg-primary-foreground/10 hover:text-primary-foreground"
+              >
                 <Link href="/admin/settings">Admin</Link>
               </Button>
             ) : null}
 
-            <Button asChild variant="ghost">
+            <Button
+              asChild
+              variant="ghost"
+              className="text-primary-foreground hover:bg-primary-foreground/10 hover:text-primary-foreground"
+            >
               <Link href="/">Forside</Link>
             </Button>
 
             <form action={logout}>
-              <Button type="submit" variant="ghost">
+              <Button
+                type="submit"
+                variant="ghost"
+                className="text-primary-foreground hover:bg-primary-foreground/10 hover:text-primary-foreground"
+              >
                 Logg ut
               </Button>
             </form>

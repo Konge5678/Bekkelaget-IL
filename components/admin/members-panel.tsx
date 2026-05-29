@@ -52,7 +52,7 @@ export function MembersPanel({ members }: Props) {
           setOpen(true);
         }}
       >
-        Ny medlem
+        Nytt medlem
       </Button>
 
       <Table>
@@ -81,7 +81,7 @@ export function MembersPanel({ members }: Props) {
                     className={cn(
                       "inline-flex rounded-md px-2 py-1 text-xs font-medium",
                       isPaid
-                        ? "bg-muted text-foreground"
+                        ? "bg-success/10 text-success"
                         : "bg-destructive/10 text-destructive",
                     )}
                   >
@@ -131,7 +131,7 @@ export function MembersPanel({ members }: Props) {
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogContent className="sm:max-w-lg">
           <DialogHeader>
-            <DialogTitle>{editing ? "Rediger medlem" : "Ny medlem"}</DialogTitle>
+            <DialogTitle>{editing ? "Rediger medlem" : "Nytt medlem"}</DialogTitle>
             <DialogDescription>
               {editing
                 ? "Oppdater informasjon og kontingentstatus."

@@ -1,3 +1,4 @@
+import { FormField } from "@/components/admin/form-field";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -7,6 +8,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 import Link from "next/link";
 import { createArticle } from "../actions";
 
@@ -15,7 +17,10 @@ export default function AdminArticlesNewPage() {
     <div className="flex flex-col gap-4">
       <div className="flex items-start justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-semibold">Ny infoside</h1>          
+          <h1 className="text-2xl font-semibold">Ny infoside</h1>
+          <p className="text-sm text-muted-foreground">
+            Opprett en ny infoside for klubben.
+          </p>
         </div>
 
         <Button asChild variant="outline">
@@ -30,35 +35,31 @@ export default function AdminArticlesNewPage() {
         </CardHeader>
         <CardContent>
           <form action={createArticle} className="flex flex-col gap-4">
-            <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
-              <div className="flex flex-col gap-1">
-                <span className="text-sm text-muted-foreground">Tittel</span>
+            <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+              <FormField label="Tittel">
                 <Input name="title" placeholder="Tittel" required />
-              </div>
-              <div className="flex flex-col gap-1">
-                <span className="text-sm text-muted-foreground">Kontaktperson</span>
+              </FormField>
+              <FormField label="Kontaktperson">
                 <Input name="contact_person" placeholder="Navn (valgfritt)" />
-              </div>
+              </FormField>
             </div>
 
-            <div className="flex flex-col gap-1">
-              <span className="text-sm text-muted-foreground">Kontakt e-post</span>
+            <FormField label="Kontakt e-post">
               <Input
                 name="contact_email"
                 placeholder="E-post (valgfritt)"
                 type="email"
               />
-            </div>
+            </FormField>
 
-            <div className="flex flex-col gap-1">
-              <span className="text-sm text-muted-foreground">Innhold</span>
-              <textarea
+            <FormField label="Innhold">
+              <Textarea
                 name="content"
                 required
-                className="min-h-[240px] w-full rounded-md border-2 border-input bg-background px-3 py-2 text-sm"
+                className="min-h-[240px]"
                 placeholder="Skriv innhold her..."
               />
-            </div>
+            </FormField>
 
             <div className="flex gap-2">
               <Button type="submit">Lagre</Button>
@@ -72,4 +73,3 @@ export default function AdminArticlesNewPage() {
     </div>
   );
 }
-

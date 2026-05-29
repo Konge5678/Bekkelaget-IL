@@ -1,3 +1,4 @@
+import { FormField } from "@/components/admin/form-field";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -7,6 +8,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 import Link from "next/link";
 import { redirect } from "next/navigation";
@@ -41,6 +43,9 @@ export default async function AdminArticlesEditPage({ params }: Props) {
       <div className="flex items-start justify-between gap-4">
         <div>
           <h1 className="text-2xl font-semibold">Rediger infoside</h1>
+          <p className="text-sm text-muted-foreground">
+            Oppdater innholdet og lagre endringer.
+          </p>
         </div>
 
         <Button asChild variant="outline">
@@ -57,46 +62,42 @@ export default async function AdminArticlesEditPage({ params }: Props) {
           <form action={updateArticle} className="flex flex-col gap-4">
             <input type="hidden" name="id" value={data.id} />
 
-            <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
-              <div className="flex flex-col gap-1">
-                <span className="text-sm text-muted-foreground">Tittel</span>
+            <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+              <FormField label="Tittel">
                 <Input
                   name="title"
                   placeholder="Tittel"
                   defaultValue={data.title ?? ""}
                   required
                 />
-              </div>
-              <div className="flex flex-col gap-1">
-                <span className="text-sm text-muted-foreground">Kontaktperson</span>
+              </FormField>
+              <FormField label="Kontaktperson">
                 <Input
                   name="contact_person"
                   placeholder="Navn (valgfritt)"
                   defaultValue={data.contact_person ?? ""}
                 />
-              </div>
+              </FormField>
             </div>
 
-            <div className="flex flex-col gap-1">
-              <span className="text-sm text-muted-foreground">Kontakt e-post</span>
+            <FormField label="Kontakt e-post">
               <Input
                 name="contact_email"
                 placeholder="E-post (valgfritt)"
                 type="email"
                 defaultValue={data.contact_email ?? ""}
               />
-            </div>
+            </FormField>
 
-            <div className="flex flex-col gap-1">
-              <span className="text-sm text-muted-foreground">Innhold</span>
-              <textarea
+            <FormField label="Innhold">
+              <Textarea
                 name="content"
                 required
-                className="min-h-[240px] w-full rounded-md border-2 border-input bg-background px-3 py-2 text-sm"
+                className="min-h-[240px]"
                 placeholder="Skriv innhold her..."
                 defaultValue={data.content ?? ""}
               />
-            </div>
+            </FormField>
 
             <div className="flex gap-2">
               <Button type="submit">Lagre</Button>
@@ -110,4 +111,3 @@ export default async function AdminArticlesEditPage({ params }: Props) {
     </div>
   );
 }
-
