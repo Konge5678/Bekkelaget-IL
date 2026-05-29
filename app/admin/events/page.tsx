@@ -11,8 +11,8 @@ import { createSupabaseServerClient } from "@/lib/supabase/server";
 import { formatOsloDateTime } from "@/lib/date";
 import Link from "next/link";
 import { redirect } from "next/navigation";
+import { AdminToast } from "@/components/admin/admin-toast";
 import { deleteEvent } from "./actions";
-import { AdminEventsToast } from "./toast";
 
 type Props = {
   searchParams?: Promise<Record<string, string | string[] | undefined>>;
@@ -54,7 +54,7 @@ export default async function AdminEventsPage({ searchParams }: Props) {
 
   return (
     <div className="flex flex-col gap-4">
-      <AdminEventsToast message={toastMessage} type={toastType} />
+      <AdminToast message={toastMessage} type={toastType} />
       <div>
         <h1 className="text-2xl font-semibold">Arrangementer</h1>
         <p className="text-sm text-muted-foreground">

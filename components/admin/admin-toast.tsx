@@ -8,7 +8,7 @@ type Props = {
   type?: "success" | "error" | "info" | "warning" | null;
 };
 
-export function AdminArticlesToast({ message, type }: Props) {
+export function AdminToast({ message, type }: Props) {
   const lastKeyRef = useRef<string | null>(null);
 
   useEffect(() => {
@@ -27,4 +27,3 @@ export function AdminArticlesToast({ message, type }: Props) {
 
   return null;
 }
-

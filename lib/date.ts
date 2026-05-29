@@ -35,9 +35,3 @@ export function generateTimeOptions(
 
   return options;
 }
-
-export function withTimeOption(options: string[], time: string) {
-  if (!time || options.includes(time)) return options;
-  return [...options, time].sort();
-}
-

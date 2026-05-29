@@ -7,8 +7,10 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { generateTimeOptions, withTimeOption } from "@/lib/date";
-import { useMemo, useState } from "react";
+import { generateTimeOptions } from "@/lib/date";
+import { useState } from "react";
+
+const TIME_OPTIONS = generateTimeOptions();
 
 type Props = {
   name: string;
@@ -23,11 +25,6 @@ export function TimeSelect({
 }: Props) {
   const [value, setValue] = useState(defaultValue);
 
-  const options = useMemo(
-    () => withTimeOption(generateTimeOptions(), defaultValue),
-    [defaultValue],
-  );
-
   return (
     <>
       <input type="hidden" name={name} value={value} required={required} />
@@ -36,7 +33,7 @@ export function TimeSelect({
           <SelectValue placeholder="Velg klokkeslett" />
         </SelectTrigger>
         <SelectContent position="popper" className="max-h-60">
-          {options.map((time) => (
+          {TIME_OPTIONS.map((time) => (
             <SelectItem key={time} value={time}>
               {time}
             </SelectItem>
