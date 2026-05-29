@@ -121,23 +121,3 @@ export async function deleteMember(formData: FormData) {
   toastRedirect("success", "Medlem slettet");
 }
 
-export async function setContingentPaid(formData: FormData) {
-  const id = String(formData.get("id") ?? "");
-  const raw = String(formData.get("value") ?? "");
-  if (!id) toastRedirect("error", "Mangler id");
-
-  const value = raw === "true";
-
-  const supabase = await createSupabaseServerClient();
-  const { error } = await supabase
-    .from("members")
-    .update({ has_paid_contingent: value })
-    .eq("id", id);
-
-  if (error) {
-    toastRedirect("error", error.message);
-  }
-
-  toastRedirect("success", value ? "Satt til betalt" : "Satt til ikke betalt");
-}
-

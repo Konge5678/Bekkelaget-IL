@@ -1,19 +1,16 @@
 "use client";
 
-import {
-  createMember,
-  deleteMember,
-  setContingentPaid,
-  updateMember,
-} from "@/app/admin/members/actions";
+import { createMember, deleteMember, updateMember } from "@/app/admin/members/actions";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
+  DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
+import { cn } from "@/lib/utils";
 import { Input } from "@/components/ui/input";
 import {
   Table,
@@ -80,21 +77,16 @@ export function MembersPanel({ members }: Props) {
                 <TableCell className="max-w-[280px] truncate">{m.email ?? "-"}</TableCell>
                 <TableCell>{m.phone ?? "-"}</TableCell>
                 <TableCell>
-                  <form action={setContingentPaid}>
-                    <input type="hidden" name="id" value={m.id} />
-                    <input
-                      type="hidden"
-                      name="value"
-                      value={isPaid ? "false" : "true"}
-                    />
-                    <Button
-                      type="submit"
-                      size="sm"
-                      variant={isPaid ? "outline" : "destructive"}
-                    >
-                      {isPaid ? "Betalt" : "Ikke betalt"}
-                    </Button>
-                  </form>
+                  <span
+                    className={cn(
+                      "inline-flex rounded-md px-2 py-1 text-xs font-medium",
+                      isPaid
+                        ? "bg-muted text-foreground"
+                        : "bg-destructive/10 text-destructive",
+                    )}
+                  >
+                    {isPaid ? "Betalt" : "Ikke betalt"}
+                  </span>
                 </TableCell>
                 <TableCell>
                   {m.due_date
@@ -140,6 +132,11 @@ export function MembersPanel({ members }: Props) {
         <DialogContent className="sm:max-w-lg">
           <DialogHeader>
             <DialogTitle>{editing ? "Rediger medlem" : "Ny medlem"}</DialogTitle>
+            <DialogDescription>
+              {editing
+                ? "Oppdater informasjon og kontingentstatus."
+                : "Legg til et nytt medlem i registeret."}
+            </DialogDescription>
           </DialogHeader>
 
           <form

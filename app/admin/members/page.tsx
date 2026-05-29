@@ -1,7 +1,7 @@
 import { AdminToast } from "@/components/admin/admin-toast";
 import { MembersPanel } from "@/components/admin/members-panel";
+import { MembersSearch } from "@/components/admin/members-search";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 import Link from "next/link";
 import { redirect } from "next/navigation";
@@ -70,21 +70,9 @@ export default async function AdminMembersPage({ searchParams }: Props) {
       </div>
 
       <div className="flex flex-wrap items-center gap-2">
-        <form className="flex flex-1 items-center gap-2" action="/admin/members" method="get">
-          <Input
-            name="q"
-            placeholder="Søk på navn, e-post eller telefon..."
-            defaultValue={q}
-          />
-          <Button type="submit" variant="outline">
-            Søk
-          </Button>
-          {q ? (
-            <Button asChild type="button" variant="ghost">
-              <Link href="/admin/members">Nullstill</Link>
-            </Button>
-          ) : null}
-        </form>
+        <div className="flex-1">
+          <MembersSearch defaultValue={q} />
+        </div>
 
         <Button asChild variant="outline">
           <Link href="/admin">Tilbake til dashboard</Link>
