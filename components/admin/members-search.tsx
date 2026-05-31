@@ -19,7 +19,8 @@ export function MembersSearch({ defaultValue }: Props) {
   useEffect(() => {
     const timeout = setTimeout(() => {
       const q = value.trim();
-      const currentQ = new URLSearchParams(window.location.search).get("q") ?? "";
+      const currentQ =
+        new URLSearchParams(window.location.search).get("q") ?? "";
 
       if (q === currentQ.trim()) return;
 
@@ -38,6 +39,7 @@ export function MembersSearch({ defaultValue }: Props) {
       placeholder="Søk på navn, e-post eller telefon..."
       value={value}
       onChange={(e) => setValue(e.target.value)}
+      aria-label="Søk medlemmer"
     />
   );
 }

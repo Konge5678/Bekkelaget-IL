@@ -40,29 +40,19 @@ export async function createMember(formData: FormData) {
     email: formData.get("email"),
     phone: formData.get("phone"),
     due_date: formData.get("due_date"),
-    has_paid_contingent: formData.get("has_paid_contingent"),
+    has_paid_contingent: formData.get("has_paid_contingent") === "true",
   });
 
   const values = getValuesOrRedirect(parsed);
 
   const supabase = await createSupabaseServerClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-
-  if (!user) {
-    redirect("/login?redirectTo=/admin/members");
-  }
-
-  const paid =
-    String(values.has_paid_contingent ?? "").trim() === "true" ? true : false;
 
   const { error } = await supabase.from("members").insert({
     name: values.name,
     email: values.email,
     phone: values.phone || null,
     due_date: toNullableDate(values.due_date) ?? null,
-    has_paid_contingent: paid,
+    has_paid_contingent: values.has_paid_contingent,
   });
 
   if (error) {
@@ -81,12 +71,10 @@ export async function updateMember(formData: FormData) {
     email: formData.get("email"),
     phone: formData.get("phone"),
     due_date: formData.get("due_date"),
-    has_paid_contingent: formData.get("has_paid_contingent"),
+    has_paid_contingent: formData.get("has_paid_contingent") === "true",
   });
 
   const values = getValuesOrRedirect(parsed);
-  const paid =
-    String(values.has_paid_contingent ?? "").trim() === "true" ? true : false;
 
   const supabase = await createSupabaseServerClient();
   const { error } = await supabase
@@ -96,7 +84,7 @@ export async function updateMember(formData: FormData) {
       email: values.email,
       phone: values.phone || null,
       due_date: toNullableDate(values.due_date) ?? null,
-      has_paid_contingent: paid,
+      has_paid_contingent: values.has_paid_contingent,
     })
     .eq("id", id);
 

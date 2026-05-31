@@ -10,6 +10,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
+import { Checkbox } from "@/components/ui/checkbox";
 import { cn } from "@/lib/utils";
 import { Input } from "@/components/ui/input";
 import {
@@ -21,7 +22,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { formatOsloDateTime } from "@/lib/date";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 type Member = {
   id: string;
@@ -40,8 +41,14 @@ type Props = {
 export function MembersPanel({ members }: Props) {
   const [open, setOpen] = useState(false);
   const [editing, setEditing] = useState<Member | null>(null);
+  const [hasPaidContingent, setHasPaidContingent] = useState(false);
 
   const formAction = editing ? updateMember : createMember;
+
+  useEffect(() => {
+    if (!open) return;
+    setHasPaidContingent(Boolean(editing?.has_paid_contingent));
+  }, [open, editing]);
 
   return (
     <>
@@ -185,16 +192,25 @@ export function MembersPanel({ members }: Props) {
                   defaultValue={editing?.due_date ?? ""}
                 />
               </div>
-              <div className="flex flex-col gap-1">
-                <span className="text-sm text-muted-foreground">Kontingent</span>
-                <select
+              <div className="flex flex-col justify-end gap-1">
+                <input
+                  type="hidden"
                   name="has_paid_contingent"
-                  defaultValue={editing?.has_paid_contingent ? "true" : "false"}
-                  className="h-9 rounded-md border-2 border-input bg-background px-3 text-sm"
+                  value={hasPaidContingent ? "true" : "false"}
+                />
+                <label
+                  htmlFor="has_paid_contingent"
+                  className="flex cursor-pointer items-center gap-2 text-sm font-medium"
                 >
-                  <option value="false">Ikke betalt</option>
-                  <option value="true">Betalt</option>
-                </select>
+                  <Checkbox
+                    id="has_paid_contingent"
+                    checked={hasPaidContingent}
+                    onCheckedChange={(checked) =>
+                      setHasPaidContingent(checked === true)
+                    }
+                  />
+                  Kontingent betalt
+                </label>
               </div>
             </div>
 

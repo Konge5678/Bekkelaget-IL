@@ -13,14 +13,6 @@ type Props = {
 export default async function AdminMembersPage({ searchParams }: Props) {
   const supabase = await createSupabaseServerClient();
 
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-
-  if (!user) {
-    redirect("/login?redirectTo=/admin/members");
-  }
-
   const sp = (await searchParams) ?? {};
   const toastRaw = sp.toast;
   const toastTypeRaw = sp.toastType;
@@ -70,10 +62,14 @@ export default async function AdminMembersPage({ searchParams }: Props) {
       </div>
 
       <div className="flex flex-wrap items-center gap-2">
-        <div className="flex-1">
+        <div className="min-w-[200px] flex-1">
           <MembersSearch defaultValue={q} />
         </div>
-
+        {q ? (
+          <Button asChild variant="outline">
+            <Link href="/admin/members">Nullstill</Link>
+          </Button>
+        ) : null}
         <Button asChild variant="outline">
           <Link href="/admin">Tilbake til dashboard</Link>
         </Button>

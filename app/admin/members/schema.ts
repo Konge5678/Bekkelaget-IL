@@ -9,12 +9,7 @@ export const memberSchema = z.object({
     .email("Ugyldig e-post"),
   phone: z.string().trim().optional().or(z.literal("")),
   due_date: z.string().trim().optional().or(z.literal("")),
-  has_paid_contingent: z
-    .string()
-    .trim()
-    .optional()
-    .or(z.literal(""))
-    .refine((v) => !v || v === "true" || v === "false", "Ugyldig status"),
+  has_paid_contingent: z.boolean(),
 });
 
 export type MemberInput = z.infer<typeof memberSchema>;

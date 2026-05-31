@@ -29,7 +29,7 @@ export function TimeSelect({
     <>
       <input type="hidden" name={name} value={value} required={required} />
       <Select value={value} onValueChange={setValue}>
-        <SelectTrigger className="h-9 w-full border-2">
+        <SelectTrigger className="h-9 w-full border-2 border-input bg-background text-foreground shadow-none dark:bg-background">
           <SelectValue placeholder="Velg klokkeslett" />
         </SelectTrigger>
         <SelectContent position="popper" className="max-h-60">
