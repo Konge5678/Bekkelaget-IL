@@ -17,9 +17,9 @@ export default function AdminArticlesNewPage() {
     <div className="flex flex-col gap-4">
       <div className="flex items-start justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-semibold">Ny infoside</h1>
+          <h1 className="text-2xl font-semibold">Ny artikkel</h1>
           <p className="text-sm text-muted-foreground">
-            Opprett en ny infoside for klubben.
+            Opprett en ny artikkel for klubben.
           </p>
         </div>
 
