@@ -1,19 +1,16 @@
+import { ListFilters } from "@/components/public/list-filters";
 import { HomeNewsFeed } from "@/components/public/home-feed";
-import { NewsFilters } from "@/components/public/news-filters";
 import { getNewsCategories, getNewsList } from "@/lib/public/news";
+import { searchParam } from "@/lib/public/search-params";
 
 type Props = {
   searchParams?: Promise<Record<string, string | string[] | undefined>>;
 };
 
-function param(value: string | string[] | undefined) {
-  return typeof value === "string" ? value : "";
-}
-
 export default async function NyheterPage({ searchParams }: Props) {
   const sp = (await searchParams) ?? {};
-  const q = param(sp.q);
-  const kategori = param(sp.kategori);
+  const q = searchParam(sp.q);
+  const kategori = searchParam(sp.kategori);
 
   const [categories, { news, error }] = await Promise.all([
     getNewsCategories(),
@@ -35,7 +32,10 @@ export default async function NyheterPage({ searchParams }: Props) {
       </div>
 
       <div className="mb-8">
-        <NewsFilters
+        <ListFilters
+          basePath="/nyheter"
+          searchPlaceholder="Søk i nyheter..."
+          searchLabel="Søk i nyheter"
           defaultQ={q}
           defaultKategori={kategori}
           categories={categories}

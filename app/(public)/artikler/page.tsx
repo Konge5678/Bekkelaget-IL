@@ -1,18 +1,15 @@
-import { ArticleSearch } from "@/components/public/article-search";
+import { ListFilters } from "@/components/public/list-filters";
 import { HomeArticlesFeed } from "@/components/public/home-feed";
 import { getArticlesList } from "@/lib/public/articles";
+import { searchParam } from "@/lib/public/search-params";
 
 type Props = {
   searchParams?: Promise<Record<string, string | string[] | undefined>>;
 };
 
-function param(value: string | string[] | undefined) {
-  return typeof value === "string" ? value : "";
-}
-
 export default async function ArtiklerPage({ searchParams }: Props) {
   const sp = (await searchParams) ?? {};
-  const q = param(sp.q);
+  const q = searchParam(sp.q);
 
   const { articles, error } = await getArticlesList(q);
 
@@ -30,7 +27,12 @@ export default async function ArtiklerPage({ searchParams }: Props) {
       </div>
 
       <div className="mb-8">
-        <ArticleSearch defaultQ={q} />
+        <ListFilters
+          basePath="/artikler"
+          searchPlaceholder="Søk i artikler..."
+          searchLabel="Søk i artikler"
+          defaultQ={q}
+        />
       </div>
 
       {error ? (

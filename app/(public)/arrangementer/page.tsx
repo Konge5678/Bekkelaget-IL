@@ -1,19 +1,16 @@
-import { EventsFilters } from "@/components/public/events-filters";
+import { ListFilters } from "@/components/public/list-filters";
 import { HomeEventsFeed } from "@/components/public/home-feed";
 import { getEventCategories, getEventsList } from "@/lib/public/events";
+import { searchParam } from "@/lib/public/search-params";
 
 type Props = {
   searchParams?: Promise<Record<string, string | string[] | undefined>>;
 };
 
-function param(value: string | string[] | undefined) {
-  return typeof value === "string" ? value : "";
-}
-
 export default async function ArrangementerPage({ searchParams }: Props) {
   const sp = (await searchParams) ?? {};
-  const q = param(sp.q);
-  const kategori = param(sp.kategori);
+  const q = searchParam(sp.q);
+  const kategori = searchParam(sp.kategori);
 
   const [categories, { events, error }] = await Promise.all([
     getEventCategories(),
@@ -35,7 +32,10 @@ export default async function ArrangementerPage({ searchParams }: Props) {
       </div>
 
       <div className="mb-8">
-        <EventsFilters
+        <ListFilters
+          basePath="/arrangementer"
+          searchPlaceholder="Søk i arrangementer..."
+          searchLabel="Søk i arrangementer"
           defaultQ={q}
           defaultKategori={kategori}
           categories={categories}

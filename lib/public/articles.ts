@@ -1,3 +1,4 @@
+import { sanitizeSearch } from "@/lib/public/categories";
 import { createSupabasePublicClient } from "@/lib/supabase/public";
 
 export type ArticleListItem = {
@@ -6,7 +7,7 @@ export type ArticleListItem = {
   content: string | null;
 };
 
-export async function getArticlesList(q?: string) {
+export async function getArticlesList(q?: string, limit?: number) {
   const supabase = createSupabasePublicClient();
 
   let query = supabase
@@ -14,9 +15,13 @@ export async function getArticlesList(q?: string) {
     .select("id,title,content")
     .order("updated_at", { ascending: false });
 
-  const search = q?.trim().replace(/[%_,]/g, "");
+  const search = sanitizeSearch(q);
   if (search) {
     query = query.or(`title.ilike.%${search}%,content.ilike.%${search}%`);
+  }
+
+  if (limit) {
+    query = query.limit(limit);
   }
 
   const { data, error } = await query;

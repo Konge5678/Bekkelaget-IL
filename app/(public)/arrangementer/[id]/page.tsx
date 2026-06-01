@@ -9,6 +9,7 @@ import {
 } from "@/components/ui/card";
 import { formatOsloDateTime } from "@/lib/date";
 import { getEventById } from "@/lib/public/events";
+import { searchParam } from "@/lib/public/search-params";
 import { ArrowLeftIcon } from "lucide-react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -18,15 +19,11 @@ type Props = {
   searchParams?: Promise<Record<string, string | string[] | undefined>>;
 };
 
-function param(value: string | string[] | undefined) {
-  return typeof value === "string" ? value : "";
-}
-
 export default async function ArrangementPage({ params, searchParams }: Props) {
   const { id } = await params;
   const sp = (await searchParams) ?? {};
-  const påmeldt = param(sp.påmeldt);
-  const feil = param(sp.feil);
+  const påmeldt = searchParam(sp.påmeldt);
+  const feil = searchParam(sp.feil);
 
   const { event, error } = await getEventById(id);
 

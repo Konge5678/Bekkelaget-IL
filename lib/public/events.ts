@@ -1,3 +1,4 @@
+import { uniqueCategories, sanitizeSearch } from "@/lib/public/categories";
 import { createSupabasePublicClient } from "@/lib/supabase/public";
 
 export type EventListItem = {
@@ -18,18 +19,10 @@ export async function getEventCategories() {
     .gte("date", now)
     .not("category", "is", null);
 
-  const categories = [
-    ...new Set(
-      (data ?? [])
-        .map((row) => row.category?.trim())
-        .filter((c): c is string => Boolean(c)),
-    ),
-  ].sort((a, b) => a.localeCompare(b, "nb"));
-
-  return categories;
+  return uniqueCategories(data);
 }
 
-export async function getEventsList(q?: string, kategori?: string) {
+export async function getEventsList(q?: string, kategori?: string, limit?: number) {
   const supabase = createSupabasePublicClient();
   const now = new Date().toISOString();
 
@@ -43,11 +36,15 @@ export async function getEventsList(q?: string, kategori?: string) {
     query = query.eq("category", kategori);
   }
 
-  const search = q?.trim().replace(/[%_,]/g, "");
+  const search = sanitizeSearch(q);
   if (search) {
     query = query.or(
       `title.ilike.%${search}%,description.ilike.%${search}%`,
     );
+  }
+
+  if (limit) {
+    query = query.limit(limit);
   }
 
   const { data, error } = await query;

@@ -9,6 +9,9 @@ import {
 } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { formatOsloDateTime } from "@/lib/date";
+import type { ArticleListItem } from "@/lib/public/articles";
+import type { EventListItem } from "@/lib/public/events";
+import type { NewsListItem } from "@/lib/public/news";
 import { cn, truncateText } from "@/lib/utils";
 import Link from "next/link";
 
@@ -25,15 +28,7 @@ function EmptyMessage({ children }: { children: ReactNode }) {
   );
 }
 
-type NewsItem = {
-  id: string;
-  title: string;
-  excerpt: string | null;
-  category: string | null;
-  created_at: string;
-};
-
-export function HomeNewsFeed({ items }: { items: NewsItem[] }) {
+export function HomeNewsFeed({ items }: { items: NewsListItem[] }) {
   if (items.length === 0) {
     return <EmptyMessage>Ingen nyheter publisert ennå.</EmptyMessage>;
   }
@@ -74,13 +69,7 @@ export function HomeNewsFeed({ items }: { items: NewsItem[] }) {
   );
 }
 
-type ArticleItem = {
-  id: string;
-  title: string;
-  content: string | null;
-};
-
-export function HomeArticlesFeed({ items }: { items: ArticleItem[] }) {
+export function HomeArticlesFeed({ items }: { items: ArticleListItem[] }) {
   if (items.length === 0) {
     return <EmptyMessage>Ingen artikler publisert ennå.</EmptyMessage>;
   }
@@ -117,15 +106,7 @@ export function HomeArticlesFeed({ items }: { items: ArticleItem[] }) {
   );
 }
 
-type EventItem = {
-  id: string;
-  title: string;
-  date: string;
-  location: string | null;
-  category: string | null;
-};
-
-export function HomeEventsFeed({ items }: { items: EventItem[] }) {
+export function HomeEventsFeed({ items }: { items: EventListItem[] }) {
   if (items.length === 0) {
     return (
       <EmptyMessage>
