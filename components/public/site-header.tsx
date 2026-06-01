@@ -23,7 +23,7 @@ function DesktopNavLink({ href, label }: { href: string; label: string }) {
         "rounded-md px-3 py-2 text-sm font-medium transition-colors",
         isActive
           ? "bg-accent text-accent-foreground"
-          : "text-primary-foreground hover:bg-accent/20 hover:text-accent",
+          : "text-primary-foreground [@media(hover:hover)]:hover:bg-accent/20 [@media(hover:hover)]:hover:text-accent",
       )}
     >
       {label}
@@ -66,7 +66,7 @@ export function SiteHeader() {
   }
 
   return (
-    <header className="border-b border-accent/30 bg-primary text-primary-foreground">
+    <header className="border-b-2 border-accent bg-primary text-primary-foreground">
       <div className="mx-auto flex w-full max-w-6xl items-center justify-between gap-4 px-4 py-4 sm:px-6">
         <Link
           href="/"
