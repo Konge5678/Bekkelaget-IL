@@ -25,7 +25,26 @@ The completed test documentation (fagprøve) is available here:
 
 ### Public site
 
-- Landing page at `/`
+- **Home**
+  - Hero with shortcuts to news and events
+  - Latest news 
+  - Latest articles 
+  - Upcoming events 
+- **News**
+  - List of all news posts
+  - Search by title and excerpt 
+  - Filter by category 
+  - Detail page with category, date, excerpt, and full content
+- **Articles**
+  - List of information pages
+  - Search by title and content
+- **Events**
+  - List of upcoming events 
+  - Search by title and description 
+  - Filter by category 
+  - **Event registration** 
+  - Friendly error if the same email is already registered for an event
+  - Success and error messages shown below the signup form
 
 ### Editor panel (`/admin`)
 
@@ -74,11 +93,18 @@ Authenticated editors and admins can:
 
 ```text
 app/
-├── page.tsx                      # Public landing page
+├── layout.tsx, globals.css       # Root layout, theme, Toaster
+├── (public)/                     # Public site (route group — not in URL)
+│   ├── layout.tsx                # Site header + footer
+│   ├── page.tsx                  # Home
+│   ├── nyheter/                  # News list + [id] detail
+│   ├── artikler/                 # Articles list + [id] detail
+│   └── arrangementer/              # Events list + [id] detail + registration
+│       ├── actions.ts            # registerForEvent server action
+│       └── schema.ts             # Registration validation (Zod)
 ├── login/page.tsx                # Editor/admin login
-├── layout.tsx, globals.css       # Root layout and theme
-└── admin/
-    ├── layout.tsx                # Protected shell and navigation
+└── admin/                        # Protected editor panel
+    ├── layout.tsx
     ├── page.tsx                  # Dashboard
     ├── news/                     # News CRUD
     ├── articles/                 # Article CRUD
@@ -87,14 +113,24 @@ app/
     └── settings/                 # Admin role management
 
 components/
-├── admin/                        # Admin-specific UI
+├── public/                       # Header, footer, feeds, filters, signup form
+├── admin/                        # Admin-specific UI (members panel, etc.)
 └── ui/                           # shadcn/ui primitives
 
 lib/
-├── supabase/                     # Server and browser Supabase clients
-└── date.ts                       # Oslo timezone helpers
+├── public/                       # Public data access (news, articles, events, home)
+│   ├── news.ts
+│   ├── articles.ts
+│   ├── events.ts
+│   ├── home.ts
+│   ├── categories.ts           # uniqueCategories, sanitizeSearch
+│   └── search-params.ts
+├── supabase/
+│   ├── server.ts                 # Authenticated server client (admin/login)
+│   └── public.ts                 # Anonymous read + event registration insert
+└── date.ts, utils.ts             # Oslo dates, truncateText, cn
 
-middleware.ts                     # Protects /admin routes
+middleware.ts                     # Protects /admin/* only
 ```
 
 ## 🚀 Getting started
