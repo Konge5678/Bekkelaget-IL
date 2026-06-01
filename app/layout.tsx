@@ -9,8 +9,8 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Fagprøve Bekkelaget IL",
-  description: "Fagprøve Bekkelaget IL",
+  title: "Bekkelaget IL",
+  description: "Bekkelaget IL",
 };
 
 export default function RootLayout({
@@ -20,7 +20,7 @@ export default function RootLayout({
 }>) {
   return (
     <html
-      lang="en"
+      lang="nb"
       className={`${inter.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
