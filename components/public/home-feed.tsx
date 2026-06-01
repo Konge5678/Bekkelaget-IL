@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { formatOsloDateTime } from "@/lib/date";
-import { cn } from "@/lib/utils";
+import { cn, truncateText } from "@/lib/utils";
 import Link from "next/link";
 
 const cardInteractive =
@@ -77,6 +77,7 @@ export function HomeNewsFeed({ items }: { items: NewsItem[] }) {
 type ArticleItem = {
   id: string;
   title: string;
+  content: string | null;
 };
 
 export function HomeArticlesFeed({ items }: { items: ArticleItem[] }) {
@@ -86,7 +87,10 @@ export function HomeArticlesFeed({ items }: { items: ArticleItem[] }) {
 
   return (
     <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-      {items.map((item) => (
+      {items.map((item) => {
+        const preview = truncateText(item.content);
+
+        return (
         <li key={item.id}>
           <Card
             className={cn(
@@ -94,17 +98,21 @@ export function HomeArticlesFeed({ items }: { items: ArticleItem[] }) {
               cardInteractive,
             )}
           >
-            <CardHeader>
+            <CardHeader className="gap-2">
               <CardTitle className="text-lg leading-snug">{item.title}</CardTitle>
+              {preview ? (
+                <CardDescription className="line-clamp-3">{preview}</CardDescription>
+              ) : null}
             </CardHeader>
-            <CardContent>
+            <CardContent className="pt-0">
               <Link href={`/artikler/${item.id}`} className={cardLink}>
                 Les artikkel
               </Link>
             </CardContent>
           </Card>
         </li>
-      ))}
+        );
+      })}
     </ul>
   );
 }

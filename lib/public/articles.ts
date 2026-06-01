@@ -3,6 +3,7 @@ import { createSupabasePublicClient } from "@/lib/supabase/public";
 export type ArticleListItem = {
   id: string;
   title: string;
+  content: string | null;
 };
 
 export async function getArticlesList(q?: string) {
@@ -10,7 +11,7 @@ export async function getArticlesList(q?: string) {
 
   let query = supabase
     .from("articles")
-    .select("id,title")
+    .select("id,title,content")
     .order("updated_at", { ascending: false });
 
   const search = q?.trim().replace(/[%_,]/g, "");

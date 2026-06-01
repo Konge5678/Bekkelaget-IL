@@ -14,7 +14,7 @@ export async function getHomePageData() {
       .limit(HOME_LIMIT),
     supabase
       .from("articles")
-      .select("id,title")
+      .select("id,title,content")
       .order("updated_at", { ascending: false })
       .limit(HOME_LIMIT),
     supabase
