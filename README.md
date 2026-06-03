@@ -4,6 +4,7 @@ Web application for Bekkelaget IL, a multi-sport club in Ottestad, Norway. The a
 
 ## 📌 Table of contents
 
+- [Documentation](#documentation)
 - [Features](#features)
 - [Tech stack](#tech-stack)
 - [Project structure](#project-structure)
@@ -19,7 +20,7 @@ Web application for Bekkelaget IL, a multi-sport club in Ottestad, Norway. The a
 
 The completed test documentation (fagprøve) is available here:
 
-[Fagprøve Dokumentasjon.pdf]()
+[Dokumentasjon Fagprøve.pdf](./Dokumentasjon%20Fagprøve.pdf)
 
 ## 🚀 Features
 
