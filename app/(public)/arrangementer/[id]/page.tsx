@@ -77,7 +77,6 @@ export default async function ArrangementPage({ params, searchParams }: Props) {
             {påmeldt ? (
               <p
                 className="rounded-lg border border-success/30 bg-success/10 px-4 py-3 text-sm text-foreground"
-                role="status"
               >
                 Du er påmeldt. Vi gleder oss til å se deg!
               </p>

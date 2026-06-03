@@ -1,6 +1,9 @@
 # Bekkelaget IL
 
+> **Fagprøve (Final apprentice test):**  **Meget godt bestått** — (Best grade)
+
 Web application for Bekkelaget IL, a multi-sport club in Ottestad, Norway. The app provides a public-facing site and a protected editor panel where club staff manage news, information pages, events, and the membership register.
+
 
 ## 📌 Table of contents
 
